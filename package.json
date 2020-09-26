@@ -1,0 +1,30 @@
+{
+  "name": "touchfingers",
+  "version": "1.0.11",
+  "description": "Handle touch behavior in the browser",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "echo \"Error: no start specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mind0n/touchfinger.git"
+  },
+  "keywords": [
+    "touch",
+    "finger",
+    "touchfinger",
+    "fingers",
+    "touches"
+  ],
+  "author": "weerspecial@126.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mind0n/touchfinger/issues"
+  },
+  "homepage": "https://github.com/mind0n/touchfinger#readme",
+  "dependencies": {
+    "tnnd": "^1.0.2"
+  }
+}

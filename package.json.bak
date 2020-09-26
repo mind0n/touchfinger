@@ -1,0 +1,26 @@
+{
+  "name": "touchfinger",
+  "version": "1.0.1",
+  "description": "Handy JS functions",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "echo \"Error: no start specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mind0n/touchfinger.git"
+  },
+  "keywords": [
+    "typescript",
+    "atom"
+  ],
+  "author": "basaratali@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mind0n/touchfinger/issues"
+  },
+  "homepage": "https://github.com/mind0n/touchfinger#readme",
+  "dependencies": {
+  }
+}
