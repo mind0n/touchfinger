@@ -1,6 +1,6 @@
 {
   "name": "touchfingers",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Handle touch behavior in the browser",
   "main": "dist/index.js",
   "scripts": {
@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/mind0n/touchfinger#readme",
   "dependencies": {
-    "tnnd": "^1.0.2"
+    "tnnd": "^1.0.9"
   }
 }
