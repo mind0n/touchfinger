@@ -7,7 +7,7 @@ import { recognizer, action, point } from "./handy.recognizer";
 export function init(){
     eventest();
     console.log('handy-touch.js');
-    (<any>window["handy"]) = new handy({});
+    (<any>window["handy"]) = new tf({});
 }
 function getTouchList(evt:TouchEvent):point[]{
     let list:point[] = [];
@@ -28,54 +28,54 @@ function handleDefault(evt:Event, rc:recognizer, preventDefault?:boolean){
     }
 }
 
-class handy{
+export class tf{
     static events:handevent;
     constructor(options:any){
         if (!(<any>window).$handy){
             (<any>window).$handy = this;
-            document.body.addEventListener('touchstart', handy.handleTouchStart);
-            document.body.addEventListener('touchmove', handy.handleTouchMove);
-            document.body.addEventListener('touchend', handy.handleTouchEnd);
-            document.body.addEventListener('touchcancel', handy.handleTouchEnd);
-            document.body.addEventListener('mousedown', handy.handleMouseDown);
-            document.body.addEventListener('mousemove', handy.handleMouseMove);
-            document.body.addEventListener('mouseup', handy.handleMouseUp);
-            handy.events = new handevent(options);
+            document.body.addEventListener('touchstart', tf.handleTouchStart);
+            document.body.addEventListener('touchmove', tf.handleTouchMove);
+            document.body.addEventListener('touchend', tf.handleTouchEnd);
+            document.body.addEventListener('touchcancel', tf.handleTouchEnd);
+            document.body.addEventListener('mousedown', tf.handleMouseDown);
+            document.body.addEventListener('mousemove', tf.handleMouseMove);
+            document.body.addEventListener('mouseup', tf.handleMouseUp);
+            tf.events = new handevent(options);
         }
     }
     static handleTouchStart(evt:TouchEvent){
         let list = getTouchList(evt);
-        var rc = handy.events.take(new action('tstart', list));
+        var rc = tf.events.take(new action('tstart', list));
         handleDefault(evt, rc);
     }
     static handleTouchMove(evt:TouchEvent){
         let list = getTouchList(evt);
-        var rc = handy.events.take(new action('tmove', list));
+        var rc = tf.events.take(new action('tmove', list));
         handleDefault(evt, rc, isSafari());
     }
     static handleTouchEnd(evt:TouchEvent){
         let list = getTouchList(evt);
-        var rc = handy.events.take(new action('tend', list));
+        var rc = tf.events.take(new action('tend', list));
         handleDefault(evt, rc);
     }
     static handleMouseDown(evt:MouseEvent){
         if (evt.button == 0){
             let list = [new point(evt.clientX, evt.clientY)];
-            var rc = handy.events.take(new action('tstart', list));
+            var rc = tf.events.take(new action('tstart', list));
         }
         handleDefault(evt, rc);
     }
     static handleMouseMove(evt:MouseEvent){
         if (evt.button == 0){
             let list = [new point(evt.clientX, evt.clientY)];
-            var rc = handy.events.take(new action('tmove', list));
+            var rc = tf.events.take(new action('tmove', list));
         }
         handleDefault(evt, rc);
     }
     static handleMouseUp(evt:MouseEvent){
         if (evt.button == 0){
             let list = [new point(evt.clientX, evt.clientY)];
-            var rc = handy.events.take(new action('tend', list));
+            var rc = tf.events.take(new action('tend', list));
         }
         handleDefault(evt, rc);
     }
