@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/mind0n/touchfinger#readme",
   "dependencies": {
-    "tnnd": "^1.0.9"
+    "tnnd": "^1.0.11"
   }
 }
