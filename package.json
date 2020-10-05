@@ -4,7 +4,7 @@
   "description": "Handle touch behavior in the browser",
   "main": "dist/index.js",
   "scripts": {
-    "start": "echo \"Error: no start specified\" && exit 1",
+    "start": "yserv",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,5 +27,8 @@
   "homepage": "https://github.com/mind0n/touchfinger#readme",
   "dependencies": {
     "tnnd": "^1.0.11"
+  },
+  "devDependencies": {
+    "yserv": "^1.0.4"
   }
 }
