@@ -1,0 +1,4 @@
+.git
+src
+*.bak
+node_modules
