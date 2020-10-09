@@ -1,4 +1,6 @@
 {
 	"port":8880,
-	"rooturl":"/"
+	"rooturl":"/",
+	"rootdir":"dist",
+	"entrydoc":"index.html"
 }

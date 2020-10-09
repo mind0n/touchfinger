@@ -29,6 +29,6 @@
     "tnnd": "^1.0.11"
   },
   "devDependencies": {
-    "ncserver": "^1.0.12"
+    "ncserver": "^1.0.15"
   }
 }
