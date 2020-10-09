@@ -1,7 +1,7 @@
 // Sample exports from other modules
 import * as tnnd from "tnnd";
+import {tf} from "./handy.touch";
 
-tnnd.log('success');
-let a:Array<number> = new Array();
-a.add(3);
+tnnd.log('log attached');
 
+(<any>window).tf = tf;
