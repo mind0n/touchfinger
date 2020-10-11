@@ -1,6 +1,6 @@
 {
   "name": "touchfingers",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Handle touch behavior in the browser",
   "main": "dist/index.js",
   "scripts": {
