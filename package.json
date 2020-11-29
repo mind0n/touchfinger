@@ -29,9 +29,9 @@
     "tnnd": "^1.0.13"
   },
   "devDependencies": {
-    "ncserver": "^1.0.20",
-    "ts-loader": "^8.0.5",
-    "typescript": "^4.0.3",
+    "ncserver": "^1.1.1",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.1.2",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }
