@@ -3,6 +3,7 @@
 	"rooturl": "/",
 	"rootdir": "./dist",
 	"entrydoc": "index.html",
+	"autoreload": true,
 	"tasks": {
 	  "cleanup": "cmd /c erase .\\dist\\*.* /Q",
 	  "assets": "cmd /c copy /y .\\src\\index.html .\\dist\\",

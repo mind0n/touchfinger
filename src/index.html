@@ -7,25 +7,5 @@
 
     <body>
         Touch finger test page - <span id="ltime"></span>
-        <script type="text/javascript">
-            var ltime = document.getElementById('ltime');
-            ltime.innerHTML = new Date().getSeconds();
-            var ws = new WebSocket('ws://localhost:8880/websocket');
-            ws.onopen = function(evt) {
-              console.log('Connection open ...');
-              ws.send('Hello WebSockets!');
-            };
-    
-            ws.onmessage = function(evt) {
-                console.log('Received Message: ' + evt.data);
-                if (evt.data == 'reload'){
-                    location.reload(true);
-                }
-            };
-    
-            ws.onclose = function(evt) {
-              console.log('Connection closed.');
-            };
-        </script>
     </body>
 </html>
