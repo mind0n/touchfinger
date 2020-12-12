@@ -2,4 +2,4 @@
 import * as tnnd from "tnnd";
 import {tf} from "./handy.touch";
 
-(<any>window).tf = tf;
+(<any>window).tf = new tf();

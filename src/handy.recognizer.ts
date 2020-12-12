@@ -24,6 +24,7 @@ export class tap extends recognizer{
     constructor(){
         super();
         this.name = 'tap';
+        log(this.name, ' recognizer created');
     }
     resolve(actions:action[],ractions:action[]){
         this.state = false;
@@ -53,6 +54,7 @@ export class dragstart extends recognizer{
     constructor(){
         super();
         this.name = 'dragstart';
+        log(this.name, ' recognizer created');
     }
     resolve(actions:action[],ractions:action[]){
         this.state = false;
@@ -85,6 +87,7 @@ export class dragging extends recognizer{
     constructor(){
         super();
         this.name = 'dragging';
+        log(this.name, ' recognizer created');
     }
     resolve(actions:action[],ractions:action[]){
         this.state = false;
@@ -114,6 +117,7 @@ export class drop extends recognizer{
     constructor(){
         super();
         this.name = 'drop';
+        log(this.name, ' recognizer created');
     }
     resolve(actions:action[],ractions:action[]){
         this.state = false;

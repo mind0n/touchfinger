@@ -30,16 +30,16 @@ function handleDefault(evt:Event, rc:recognizer, preventDefault?:boolean){
 
 export class tf{
     static events:handevent;
-    constructor(options:any){
+    constructor(options?:any){
         if (!(<any>window).$handy){
             (<any>window).$handy = this;
-            document.body.addEventListener('touchstart', tf.handleTouchStart);
-            document.body.addEventListener('touchmove', tf.handleTouchMove);
-            document.body.addEventListener('touchend', tf.handleTouchEnd);
-            document.body.addEventListener('touchcancel', tf.handleTouchEnd);
-            document.body.addEventListener('mousedown', tf.handleMouseDown);
-            document.body.addEventListener('mousemove', tf.handleMouseMove);
-            document.body.addEventListener('mouseup', tf.handleMouseUp);
+            document.addEventListener('touchstart', tf.handleTouchStart);
+            document.addEventListener('touchmove', tf.handleTouchMove);
+            document.addEventListener('touchend', tf.handleTouchEnd);
+            document.addEventListener('touchcancel', tf.handleTouchEnd);
+            document.addEventListener('mousedown', tf.handleMouseDown);
+            document.addEventListener('mousemove', tf.handleMouseMove);
+            document.addEventListener('mouseup', tf.handleMouseUp);
             tf.events = new handevent(options);
         }
     }

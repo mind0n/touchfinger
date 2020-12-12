@@ -25,6 +25,12 @@ export class handevent{
             this.rlist.add(new drop());
         }
     }
+    addrecognizer(target:recognizer){
+        var exist = this.rlist.filter(x=>x.name.toLowerCase() == target.name.toLowerCase());
+        if (!exist){
+            this.rlist.add(target);
+        }
+    }
     resetlist(){
         this.actions = null;
         this.actions = [];
