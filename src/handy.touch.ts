@@ -1,5 +1,5 @@
 import {eventest, handevent} from "./handy.event";
-import {trigger, tests, isSafari} from "tnnd";
+import {trigger, tests, isSafari, log, isTouchable} from "tnnd";
 import { recognizer, action, point } from "./handy.recognizer";
 (<any>tests).test_touch = function(){
     console.log('touch tests');
@@ -22,8 +22,10 @@ function handleDefault(evt:Event, rc:recognizer, preventDefault?:boolean){
         evt.preventDefault();
     }
     if (rc){
-        var source = evt.target || evt.srcElement;
-        console.log(source);
+        var source = <any>(evt.target || evt.srcElement);
+        if (source.$tf){
+            console.log(source);
+        }
         trigger(source, rc.name);
     }
 }
@@ -33,22 +35,37 @@ export class tf{
     constructor(options?:any){
         if (!(<any>window).$handy){
             (<any>window).$handy = this;
-            document.addEventListener('touchstart', tf.handleTouchStart);
-            document.addEventListener('touchmove', tf.handleTouchMove);
-            document.addEventListener('touchend', tf.handleTouchEnd);
-            document.addEventListener('touchcancel', tf.handleTouchEnd);
-            document.addEventListener('mousedown', tf.handleMouseDown);
-            document.addEventListener('mousemove', tf.handleMouseMove);
-            document.addEventListener('mouseup', tf.handleMouseUp);
+            if (isTouchable){
+                document.addEventListener('touchstart', tf.handleTouchStart);
+                document.addEventListener('touchmove', tf.handleTouchMove, false);
+                document.addEventListener('touchend', tf.handleTouchEnd);
+                document.addEventListener('touchcancel', tf.handleTouchEnd);
+                document.addEventListener('gesturestart', function(evt:any){
+                    evt.preventDefault();
+                });
+            }else{
+                document.addEventListener('wheel', tf.handleWheel);
+                document.addEventListener('mousedown', tf.handleMouseDown);
+                document.addEventListener('mousemove', tf.handleMouseMove);
+                document.addEventListener('mouseup', tf.handleMouseUp);
+            }
+
             tf.events = new handevent(options);
         }
+    }
+    static handleWheel(evt:WheelEvent){
+        log('wheel',evt.deltaX, evt.deltaY, evt.deltaZ);
     }
     static handleTouchStart(evt:TouchEvent){
         let list = getTouchList(evt);
         var rc = tf.events.take(new action('tstart', list));
         handleDefault(evt, rc);
     }
-    static handleTouchMove(evt:TouchEvent){
+    static handleTouchMove(evt:any){
+        var tvt = evt.originalEvent || evt;
+        if (tvt.scale>1){
+            tvt.preventDefault();
+        }
         let list = getTouchList(evt);
         var rc = tf.events.take(new action('tmove', list));
         handleDefault(evt, rc, isSafari());

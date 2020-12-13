@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Touch Finger</title>
         <script src="tf.js"></script>
+        <style>
+            body{
+                overscroll-behavior: none;
+                position: fixed;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+            }
+            .box{
+                width:100px;
+                height:100px;
+                position:absolute;
+                background-color: silver;
+            }
+        </style>
     </head>
 
     <body>
         Touch finger test page - <span id="ltime"></span>
+        <div id="box1" class="box">Box A</div>
+        <div id="box2" class="box">Box B</div>
+        <div id="box3" class="box">Box C</div>
         <script>
             console.log(tf);
         </script>

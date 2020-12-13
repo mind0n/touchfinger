@@ -57,14 +57,15 @@ export class handevent{
         let self = this;
         if (act.name == 'tend' || act.name == 'tmove'){
             let trc = null;
-            let rc = <recognizer>this.rlist.each(function(x,i){
+            let rlist = this.rlist;
+            let rc = <recognizer>rlist.each(function(x,i){
+                console.log(rlist);
                 let rsv = x.resolve(self.actions, self.ractions);
-                if (rsv === true){
-                    return true;
-                }else if (rsv instanceof action){
+                if (rsv instanceof action){
                     //self.actions.clear();
                     self.ractions.add(rsv);
                     trc = x;
+                    return true;
                 }
             });
             if (act.name == 'tend'){
