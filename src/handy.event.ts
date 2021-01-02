@@ -43,26 +43,18 @@ export class handevent{
         });
     }
     take(act:action){
-        // log(function(){
-        //     let txt = act.name;
-        //     act.pos.each(function(p,i){
-        //         txt += '|' + p.cx + ',' + p.cy;
-        //     });
-        //     return txt;
-        // });
         if (act.name == 'tstart'){
             this.resetlist();
         }
         this.actions.add(act);
         let self = this;
         if (act.name == 'tend' || act.name == 'tmove'){
-            let trc = null;
+            let trc:recognizer = null;
             let rlist = this.rlist;
+            let rsv:any = null;
             let rc = <recognizer>rlist.each(function(x,i){
-                console.log(rlist);
-                let rsv = x.resolve(self.actions, self.ractions);
+                rsv = x.resolve(self.actions, self.ractions);
                 if (rsv instanceof action){
-                    //self.actions.clear();
                     self.ractions.add(rsv);
                     trc = x;
                     return true;
@@ -71,7 +63,11 @@ export class handevent{
             if (act.name == 'tend'){
                 this.resetlist();
             }
-            return rc || trc;
+            let rlt = rc || trc;
+            if (!rlt){
+                return null;
+            }
+            return rsv;
         }
 
         return null;

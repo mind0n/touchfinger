@@ -29,6 +29,9 @@
         <div id="box3" class="box">Box C</div>
         <script>
             console.log(tf);
+            tf.select('#box3').on('tap', function(source, act){
+                console.log(source, act);
+            });
         </script>
     </body>
 </html>

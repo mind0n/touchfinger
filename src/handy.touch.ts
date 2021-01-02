@@ -1,5 +1,5 @@
 import {eventest, handevent} from "./handy.event";
-import {trigger, tests, isSafari, log, isTouchable} from "tnnd";
+import {tests, isSafari, log, isTouchable, uid} from "tnnd";
 import { recognizer, action, point } from "./handy.recognizer";
 (<any>tests).test_touch = function(){
     console.log('touch tests');
@@ -16,26 +16,38 @@ function getTouchList(evt:TouchEvent):point[]{
     });
     return list;
 }
-function handleDefault(evt:Event, rc:recognizer, preventDefault?:boolean){
+function trigger(source:any, act:action){
+    let name = act.name;
+    if (source.$tf){
+        //console.log(source, act);
+        var id = source.$tf.id;
+        if (eventSubscribers[name]){
+            var subs = eventSubscribers[name];
+            var handler = subs[id];
+            if (handler){
+                handler.call(source,act)
+            }
+        }
+    }
+}
+function handleDefault(evt:Event, act:any, preventDefault?:boolean){
     evt.stopPropagation();
     if (preventDefault){
         evt.preventDefault();
     }
-    if (rc){
+    if (act){
         var source = <any>(evt.target || evt.srcElement);
-        if (source.$tf){
-            console.log(source);
-        }
-        trigger(source, rc.name);
+        trigger(source, act);
     }
 }
-
+var monitortargets:any = {};
+var eventchain:handevent;
+var eventSubscribers:any = {};
 export class tf{
-    static events:handevent;
     constructor(options?:any){
         if (!(<any>window).$handy){
             (<any>window).$handy = this;
-            if (isTouchable){
+            if (isTouchable()){
                 document.addEventListener('touchstart', tf.handleTouchStart);
                 document.addEventListener('touchmove', tf.handleTouchMove, false);
                 document.addEventListener('touchend', tf.handleTouchEnd);
@@ -50,7 +62,40 @@ export class tf{
                 document.addEventListener('mouseup', tf.handleMouseUp);
             }
 
-            tf.events = new handevent(options);
+            eventchain = new handevent(options);
+        }
+    }
+    select(o:any){
+        function delegate(name:string, handler:Function){
+            if (!eventSubscribers[name]){
+                eventSubscribers[name] = {};
+            }
+            var subs = eventSubscribers[name];
+            subs[this.$tf.id] = handler;
+        }
+        function init(target:any){
+            if (target.$tf){
+                return;
+            }
+            target.$tf = { id:uid() };
+            let id = target.$tf.id;
+            monitortargets[id] = target;
+            target.on = delegate;
+        }
+        let typ = typeof(o);
+        let targets = o;
+        if (typ == 'string'){
+            targets = document.querySelectorAll(o);
+            return {
+                on:function(name:string, act:action){
+                    targets.each(function(target,i){
+                        init(target);
+                        target.on(name, act);
+                    });
+                }
+            }
+        }else{
+            init(targets);
         }
     }
     static handleWheel(evt:WheelEvent){
@@ -58,7 +103,7 @@ export class tf{
     }
     static handleTouchStart(evt:TouchEvent){
         let list = getTouchList(evt);
-        var rc = tf.events.take(new action('tstart', list));
+        var rc = eventchain.take(new action('tstart', list));
         handleDefault(evt, rc);
     }
     static handleTouchMove(evt:any){
@@ -67,32 +112,32 @@ export class tf{
             tvt.preventDefault();
         }
         let list = getTouchList(evt);
-        var rc = tf.events.take(new action('tmove', list));
+        var rc = eventchain.take(new action('tmove', list));
         handleDefault(evt, rc, isSafari());
     }
     static handleTouchEnd(evt:TouchEvent){
         let list = getTouchList(evt);
-        var rc = tf.events.take(new action('tend', list));
+        var rc = eventchain.take(new action('tend', list));
         handleDefault(evt, rc);
     }
     static handleMouseDown(evt:MouseEvent){
         if (evt.button == 0){
             let list = [new point(evt.clientX, evt.clientY)];
-            var rc = tf.events.take(new action('tstart', list));
+            var rc = eventchain.take(new action('tstart', list));
         }
         handleDefault(evt, rc);
     }
     static handleMouseMove(evt:MouseEvent){
         if (evt.button == 0){
             let list = [new point(evt.clientX, evt.clientY)];
-            var rc = tf.events.take(new action('tmove', list));
+            var rc = eventchain.take(new action('tmove', list));
         }
         handleDefault(evt, rc);
     }
     static handleMouseUp(evt:MouseEvent){
         if (evt.button == 0){
             let list = [new point(evt.clientX, evt.clientY)];
-            var rc = tf.events.take(new action('tend', list));
+            var rc = eventchain.take(new action('tend', list));
         }
         handleDefault(evt, rc);
     }
